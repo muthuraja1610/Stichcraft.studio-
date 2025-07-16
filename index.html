@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Stitchcraft Studio</title>
+  <link rel="icon" href="Untitled design.jpg" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;600&family=Outfit:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fefbf6;
+      color: #3b3b3b;
+      overflow-x: hidden;
+      line-height: 1.7;
+    }
+
+    header, section {
+      max-width: 1200px;
+      margin: auto;
+      padding: 60px 20px;
+    }
+
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 40px;
+      background: linear-gradient(135deg, #fffbe6, #fef6e4);
+      border-radius: 20px;
+      padding: 60px 40px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3em;
+      margin-bottom: 10px;
+      animation: fadeIn 1.2s ease forwards;
+      color: #a47148;
+    }
+
+    .hero p {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+      color: #5e5246;
+      animation: fadeIn 1.4s ease forwards;
+    }
+
+    .hero img {
+      width: 280px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 28px;
+      background: #000;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #d4af37;
+      color: #000;
+    }
+
+    .our-story {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    padding: 40px;
+    flex-wrap: wrap; /* for responsiveness */
+    background-color: #fdfdfd;
+  }
+
+  .our-story img {
+    width: 300px;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .our-story-text {
+    max-width: 600px;
+    text-align: left;
+  }
+
+  .our-story-text h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: #333;
+  }
+
+  .our-story-text p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #555;
+  }
+
+  .our-story-text h4 {
+    margin-top: 20px;
+    color: #6b4e2c;
+  }
+
+  @media (max-width: 768px) {
+    .our-story {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .our-story-text {
+      text-align: center;
+    }
+  }
+   /** .section-title {
+      font-size: 2.5em;
+      font-family: 'Outfit', sans-serif;
+      margin-bottom: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      text-align: center;
+      animation: slideIn 1s ease forwards;
+      color: #a47148;
+    }
+
+    .our-story {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    .our-story img {
+      width: 320px;
+      border-radius: 12px;
+      animation: fadeIn 1.5s ease forwards;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    }
+
+    .our-story p {
+      font-size: 1.1em;
+      color: #3f3f3f;
+    }
+**/
+    .offers {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 20px;
+      text-align: center;
+    }
+
+    .creations {
+      display: grid;
+     /** grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));**/
+      gap: 20px;
+      text-align: center;
+    }
+
+    .offer-icon, .creation-box {
+      background: #fffef3;
+      padding: 20px;
+      border-radius: 12px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px dashed #d4af37;
+    }
+
+    .offer-icon:hover, .creation-box:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      background: #fffbe6;
+    }
+
+    .creation-item {
+    margin: 10px 0;
+    cursor: pointer;
+    padding: 10px;
+    background: #fefaf6;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+  }
+
+  .creation-details {
+  display: none;
+  margin-top: 5px;
+  padding: 10px;
+  grid-column: 5;
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.creation-details.active {
+  display: block;
+}
+
+
+    .testimonials {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .testimonial {
+      background: #f8f8f8;
+      padding: 20px;
+      border-left: 4px solid #d4af37;
+      font-style: italic;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    .testimonial:hover {
+      background: #fffbe6;
+    }
+
+    .form-section {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .form-section input, .form-section textarea {
+      padding: 14px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1em;
+      font-style: italic;
+    }
+
+    .submit-btn {
+      background: #000;
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .submit-btn:hover {
+      background: #d4af37;
+      color: #000;
+    }
+
+    .hero-logo {
+  width: 300px;
+  padding: 20px;
+  background: #fffef3;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.07);
+}
+
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    @keyframes slideIn {
+      from {opacity: 0; transform: translateX(-50px);}
+      to {opacity: 1; transform: translateX(0);}
+    }
+
+ /**  @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+ } **/
+
+    @media (max-width: 768px) {
+      .hero, .our-story {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .hero img, .our-story img {
+        width: 100%;
+      }
+
+    }
+  </style>
+</head>
+
+<!-- Full HTML content remains same, structure-wise. Styling updated. -->
+
+<body>
+
+  <!-- Thread and Needle 
+  <div id="thread-wrapper">
+    <div id="thread-line"></div>
+    <img id="needle" src="Nadel und faden silhouette symbol vektor illustration schneider logo mit nadelsymbol und curvy _ ___.jpg" alt="Needle">
+  </div>
+-->
+  <!-- Hero Section -->
+  <header class="hero">
+    <div>
+      <h1>Stitchcraft Studio ✂️</h1>
+      <p>Custom stitched outfits tailored for elegance and style.</p>
+      <a href="#creations" class="btn">Explore Gallery</a>
+    </div>
+    <img src="Untitled design.jpg"alt="Stitchcraft Studio Logo" class="hero-logo"/>
+  </header>
+
+  <!-- Our Story -->
+  <section class="our-story">
+    <img src="e6fb8357f9d8174703d62dd56356621b.jpg" alt="Tailoring Image" />
+    <div class="our-story-text">
+      <h2>Our Story</h2>
+      <p>
+        At Stitchcraft Studio, every thread carries a story. <br><br>
+        What began as a small passion for stitching and design slowly bloomed into a space where fabric meets imagination. <br><br>
+        We started this journey with love, patience, and a deep belief in handmade beauty. From custom blouses, pre-pleating services, to thoughtful fabric art, everything we create is made with care, creativity, and a sprinkle of love. <br><br>
+        We don’t just stitch clothes — we stitch memories.
+      </p>
+      <h4>Welcome to our little world of threads, textures, and timeless charm.</h4>
+    </div>
+  </section>
+
+  <!-- What We Offer -->
+  <section>
+    <h2 class="section-title">What We Offer</h2>
+    <div class="offers">
+      <div class="offer-icon">👗 Bridal Wear</div>
+      <div class="offer-icon">👚 Blouse Designing</div>
+      <div class="offer-icon">🧵 Custom Stitching</div>
+      <div class="offer-icon">🧒 Saree Pre-Plating</div>
+      <div class="offer-icon">✂️ Alterations</div>
+    </div>
+  </section>
+
+  <!-- Our Creations -->
+  <section id="creations">
+    <h2 class="section-title">Our Creations</h2>
+    <div class="creations">
+
+      <div class="creation-box">
+        <div class="creation-title" onclick="toggleDetails('Bridal')">Bridal</div>
+        <div id="Bridal" class="creation-details">
+          <h4 style="color: #a47148; margin-bottom: 10px;">Elegant Bridal Collections</h4>
+  <p>
+    Our bridal blouse designs are tailored to make your big day even more special.
+    We blend traditional craftsmanship with modern styling from intricate zardosi and aari work to delicate pearls and sequins.
+    Each piece is custom-stitched to match your bridal saree or lehenga.
+  </p>
+  <ul style="margin: 10px 0 10px 20px;">
+    <li>Custom Neck & Sleeve Designs</li>
+    <li>Mirror, Stone, and Bead Work</li>
+    <li>Back Tie-ups, Latkans & Tassels</li>
+    <li>Personalized Fittings with Trial Sessions</li>
+  </ul>
+          <br><img src="Sabyasachi Inspired Red Color Wedding Lehenga Set - Made to Measure.jpg" alt="Blouse Sample" width="130"/>
+        </div>
+      </div>
+      
+      <div class="creation-box" onclick="toggleDetails('Blouse')">Blouse
+        <div id="Blouse" class="creation-details">
+          <h4 style="color: #a47148; margin-bottom: 10px;">Custom Blouse Designing</h4>
+          <p>
+            Our blouse designs combine everyday comfort with a touch of style. Whether you're dressing for a wedding, a festival, or a casual outing,
+            our tailored blouses enhance your look while offering perfect fit and function.
+          </p>
+          <ul style="margin: 10px 0 10px 20px;">
+            <li>Princess Cut, Boat Neck, V-Cut & Custom Styles</li>
+            <li>Padded, Non-Padded, and Lining Options</li>
+            <li>Hook, Zip, or Dori Closures</li>
+            <li>Hand Embroidery, Mirror Work, and Lace Finish</li>
+            <li>Matching with Saree / Lehenga / Crop Tops</li>
+          </ul>
+          <br><img src="blouse.jpg" alt="Blouse Sample" width="200"/>
+        </div>
+      </div>
+
+      <div class="creation-box" onclick="toggleDetails('Saree Pre-Plating')">Saree Pre-Plating
+        <div id="Saree Pre-Plating" class="creation-details">
+          <h4 style="color: #a47148; margin-bottom: 10px;">Saree Pre-Pleating Service</h4>
+  <p>
+    Tired of last-minute saree pleating stress?<br> 
+    Our pre-pleated saree service gives you a perfectly draped look in minutes.
+    Ideal for brides, working women, and anyone who wants convenience without compromising on elegance.
+  </p>
+  <ul style="margin: 10px 0 10px 20px;">
+    <li>Custom Pleat Length Based on Height & Style</li>
+    <li>Pin-Free Stitching – No More Worries!</li>
+    <li>Easy to Drape – Just Wrap & Tuck</li>
+    <li>Works on All Fabrics – Silk, Cotton, Georgette, Net</li>
+    <li>Perfect for Bridal Lehenga Style Drape & Kids' Sarees</li>
+  </ul>
+          <br><img src="blouse.jpg" alt="Blouse Sample" width="200"/>
+        </div>
+      </div>
+
+      <div class="creation-box" onclick="toggleDetails('Traditional')">Traditional
+        <div id="Traditional" class="creation-details">
+          <h4 style="color: #a47148; margin-bottom: 10px;">Timeless Traditional Wear</h4>
+  <p>
+    Celebrate the rich beauty of our culture with traditionally inspired blouses and ethnic wear. From temple borders to 
+    kemp-stone embroidery, every piece is handcrafted with the grace of old-school charm and modern precision.
+  </p>
+  <ul style="margin: 10px 0 10px 20px;">
+    <li>Kanchi-Inspired Blouse Designs</li>
+    <li>Kemp, Mirror & Thread Embroidery</li>
+    <li>Temple Borders and Traditional Buttas</li>
+    <li>Elbow-Length & Puff Sleeve Variants</li>
+    <li>Perfect Match for Silk, Cotton & Handloom Sarees</li>
+  </ul>
+          <br><img src="blouse.jpg" alt="Blouse Sample" width="200"/>
+        </div>
+      </div>
+
+      <div class="creation-box"  onclick="toggleDetails('Modern')">Modern
+        <div id="Modern" class="creation-details">
+          <h4 style="color: #a47148; margin-bottom: 10px;">Contemporary & Modern Styles</h4>
+          <p>
+            For the fashion-forward women who love bold cuts and chic details — our modern blouse designs blend comfort, trend, and uniqueness.
+            From sleeveless to strappy, from geometric to pastel tones — each piece is stitched to help you stand out.
+          </p>
+          <ul style="margin: 10px 0 10px 20px;">
+            <li>Crop Blouses, Backless & Halter Neck Styles</li>
+            <li>Sleeveless, Cold Shoulder & Ruffle Sleeves</li>
+            <li>Minimalist Embroidery & Clean Finish</li>
+            <li>Perfect for Lehengas, Skirts & Indo-Western Outfits</li>
+            <li>Trendy Color Palettes – Sage, Peach, Lavender, and more</li>
+          </ul>
+          <br><img src="blouse.jpg" alt="Blouse Sample" width="200"/>
+        </div>
+      </div>
+    </div>
+    
+
+   <!-- <div class="our-creations">
+      <h2>Our Creations</h2>
+    
+      <div class="creation-item" onclick="toggleDetails('blouse')">
+        Custom Blouses
+        <div id="blouse" class="creation-details">
+          Handcrafted blouses with detailed embroidery, stonework, and modern fits.
+          <br><img src="blouse.jpg" alt="Blouse Sample" width="200"/>
+        </div>
+      </div> 
+    
+      <div class="creation-item" onclick="toggleDetails('pleats')">
+        Pre-Pleated Sarees
+        <div id="pleats" class="creation-details">
+          Ready-to-wear pre-pleated sarees, easy to drape, stylish and elegant.
+          <br><img src="pleats.jpg" alt="Pleated Saree" width="200"/>
+        </div>
+      </div>
+    
+      <div class="creation-item" onclick="toggleDetails('art')">
+        Fabric Art
+        <div id="art" class="creation-details">
+          Beautiful handcrafted fabric wall pieces, ideal for gifting or home decor.
+          <br><img src="fabric-art.jpg" alt="Fabric Art" width="200"/>
+        </div>
+      </div>
+    </div>
+  -->
+  </section>
+
+  <!-- Testimonials -->
+  <section>
+    <h2 class="section-title">What Clients Say</h2>
+    <div class="testimonials">
+      <div class="testimonial"><strong>“Absolutely stunning bridal lehenga. Felt like a queen!”</strong> – Priya</div>
+      <div class="testimonial"><strong>“Exactly my vibe — modern, minimal, and well-stitched!”</strong> – Lavanya</div>
+      <div class="testimonial"><strong>“Saved my time, perfect pleats, no pin stress!”</strong> – Vedha </div>
+      <div class="testimonial"><strong>“Comfortable, stylish, and stitched with perfect precision!”</strong> – Chitra </div>
+    </div>
+  </section>
+
+  <!-- Contact Form -->
+  <section>
+    <h2 class="section-title">Let’s Stitch Your Dream Outfit!</h2>
+    <form class="form-section" action="https://formspree.io/f/mgvygrva" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required />
+      <input type="email" name="_replyto" placeholder="Your Email" required />
+      <input type="number" name="number" placeholder="Your Mobile Number" required />
+      <input type="text" name="stitching_type" placeholder="Type of Stitching (e.g., Bridal, Blouse)" />
+      <textarea name="message" rows="4" placeholder="Your Message"></textarea>
+      <button type="submit" class="submit-btn">SUBMIT</button>
+    </form>
+  </section>
+
+  <!-- Thread Animation Script -->
+  <script>
+   /** const thread = document.getElementById('thread-line');
+    const needle = document.getElementById('needle');
+
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const maxHeight = document.body.scrollHeight - window.innerHeight;
+      const threadHeight = (scrollTop / maxHeight) * window.innerHeight;
+
+      thread.style.height = threadHeight + "px";
+      needle.style.top = threadHeight + "px";
+    });  **/
+
+    function toggleDetails(id) {
+    const allDetails = document.querySelectorAll('.creation-details');
+    allDetails.forEach((detail) => {
+      if (detail.id === id) {
+        // Toggle only if it's not already open
+        const isActive = detail.classList.contains('active');
+        detail.classList.toggle('active', !isActive);
+      } else {
+        // Hide others
+        detail.classList.remove('active');
+      }
+    });
+  }
+  </script> 
+</body>
+</html>
